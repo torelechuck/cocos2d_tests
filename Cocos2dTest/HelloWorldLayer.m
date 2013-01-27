@@ -99,6 +99,8 @@
 		
 		// Add the menu to the layer
 		[self addChild:menu];
+        
+        //Testing ...
 
 	}
 	return self;
