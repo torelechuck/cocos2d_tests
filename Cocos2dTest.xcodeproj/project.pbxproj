@@ -133,6 +133,7 @@
 		90A0214716B4AFC3004F2787 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A0214616B4AFC3004F2787 /* AppDelegate.m */; };
 		90A0214A16B4AFC3004F2787 /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A0214916B4AFC3004F2787 /* HelloWorldLayer.m */; };
 		90A0214D16B4AFC3004F2787 /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A0214C16B4AFC3004F2787 /* IntroLayer.m */; };
+		90A0215416B4C562004F2787 /* glyph_rock_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 90A0215316B4C562004F2787 /* glyph_rock_icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -398,6 +399,7 @@
 		90A0214916B4AFC3004F2787 /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
 		90A0214B16B4AFC3004F2787 /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		90A0214C16B4AFC3004F2787 /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
+		90A0215316B4C562004F2787 /* glyph_rock_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = glyph_rock_icon.png; path = Resources/glyph_rock_icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -472,6 +474,7 @@
 		90A01FCE16B4AFC1004F2787 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				90A0215316B4C562004F2787 /* glyph_rock_icon.png */,
 				90A01FCF16B4AFC1004F2787 /* Default.png */,
 				90A01FD116B4AFC1004F2787 /* Default-Landscape~ipad.png */,
 				90A01FD316B4AFC1004F2787 /* fps_images.png */,
@@ -895,6 +898,7 @@
 				90A01FE416B4AFC1004F2787 /* Icon@2x.png in Resources */,
 				90A01FE716B4AFC1004F2787 /* iTunesArtwork in Resources */,
 				90A0212516B4AFC3004F2787 /* ChangeLog in Resources */,
+				90A0215416B4C562004F2787 /* glyph_rock_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
