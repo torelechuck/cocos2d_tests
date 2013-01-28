@@ -66,7 +66,8 @@ double ySpeed;
 -(void) calculateXSpeed:(double)x
 {
     double rockCenter = [rock contentSize].width / 2.0;
-    if((xSpeed > 0 && x > 480 - rockCenter) || (xSpeed < 0 && x < 0 + rockCenter))
+    double maxX = [[CCDirector sharedDirector] winSize].width;
+    if((xSpeed > 0 && x > maxX - rockCenter) || (xSpeed < 0 && x < 0 + rockCenter))
     {
         xSpeed = -xSpeed;
     }
