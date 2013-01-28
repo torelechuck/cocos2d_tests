@@ -50,7 +50,7 @@ double ySpeed;
         ySpeed = 0;
         [self addChild:rock];
         [self schedule:@selector(nextFrame:)];
-	}
+    }
 	return self;
 }
 
@@ -65,15 +65,17 @@ double ySpeed;
 
 -(void) calculateXSpeed:(double)x
 {
-   if((xSpeed > 0 && x > 480) || (xSpeed < 0 && x < 0))
-   {
-       xSpeed = -xSpeed;
-   }
+    double rockCenter = [rock contentSize].width / 2.0;
+    if((xSpeed > 0 && x > 480 - rockCenter) || (xSpeed < 0 && x < 0 + rockCenter))
+    {
+        xSpeed = -xSpeed;
+    }
 }
 
 -(void) calculateYSpeed:(double)y withDelta:(ccTime)dt
 {
-    if(y < 0 && ySpeed < 0)
+    double rockCenter = [rock contentSize].height / 2.0;
+    if(y < 0 + rockCenter && ySpeed < 0)
     {
         ySpeed = -ySpeed;
     }
