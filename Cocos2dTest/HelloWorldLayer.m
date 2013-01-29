@@ -13,9 +13,12 @@
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
 
+#import <tgmath.h>
+
 #pragma mark - HelloWorldLayer
 
 CCSprite *rock;
+CCSprite *man;
 double xSpeed;
 double ySpeed;
 
@@ -45,11 +48,15 @@ double ySpeed;
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super initWithColor:ccc4(255,255,255,255)]) ) {
 		rock = [CCSprite spriteWithFile:@"glyph_rock_icon.png"];
-        [rock setPosition:ccp(0,200)];
+        [rock setPosition:ccp([rock contentSize].width/2,200)];
         xSpeed = 100;
         ySpeed = 0;
         [self addChild:rock];
         [self schedule:@selector(nextFrame:)];
+        man = [CCSprite spriteWithFile:@"coffeeman.png"];
+        [man setPosition:ccp(200,[man contentSize].width/2)];
+        [self addChild:man];
+        [self setIsTouchEnabled:YES];
     }
 	return self;
 }
@@ -84,6 +91,17 @@ double ySpeed;
     {
         ySpeed = ySpeed - 300*dt;
     }
+}
+
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint newLocation = ccp([self convertTouchToNodeSpace:touch].x, [man position].y);
+    CGFloat winWidth = [[CCDirector sharedDirector] winSize].width;
+    CGFloat velocity = winWidth/2; //2 seconds from one end to the other
+    CGFloat distance = fabs([man position].x - newLocation.x);
+    CGFloat duration = distance/velocity;
+    [man runAction:[CCMoveTo actionWithDuration:duration position:newLocation]];
 }
 
 // on "dealloc" you need to release all your retained objects
