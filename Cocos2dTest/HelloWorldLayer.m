@@ -43,7 +43,7 @@ double ySpeed;
 {
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
-	if( (self=[super init]) ) {
+	if( (self=[super initWithColor:ccc4(255,255,255,255)]) ) {
 		rock = [CCSprite spriteWithFile:@"glyph_rock_icon.png"];
         [rock setPosition:ccp(0,200)];
         xSpeed = 100;
