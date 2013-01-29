@@ -57,6 +57,7 @@ double ySpeed;
         [man setPosition:ccp(200,[man contentSize].width/2)];
         [self addChild:man];
         [self setIsTouchEnabled:YES];
+        [self schedule:@selector(update:)];
     }
 	return self;
 }
@@ -102,6 +103,18 @@ double ySpeed;
     CGFloat distance = fabs([man position].x - newLocation.x);
     CGFloat duration = distance/velocity;
     [man runAction:[CCMoveTo actionWithDuration:duration position:newLocation]];
+}
+
+- (void)update:(ccTime)dt
+{
+    if (CGRectIntersectsRect([rock boundingBox], [man boundingBox]))
+    {
+        CCLabelTTF * label = [CCLabelTTF labelWithString:@"Boom" fontName:@"Arial" fontSize:32];
+        label.color = ccc3(0,0,0);
+        CGSize winSize = [[CCDirector sharedDirector] winSize];
+        label.position = ccp(winSize.width/2, winSize.height/2);
+        [self addChild:label];
+    }
 }
 
 // on "dealloc" you need to release all your retained objects
