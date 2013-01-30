@@ -73,12 +73,44 @@ double ySpeed;
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
-    CGPoint newLocation = ccp([self convertTouchToNodeSpace:touch].x, [man position].y);
+    CGPoint touchLoc = ccp([self convertTouchToNodeSpace:touch].x, [self convertTouchToNodeSpace:touch].y);
+    if(CGRectContainsPoint([man boundingBox], touchLoc))
+    {
+        [self throwLine:touchLoc];
+    }
+    else
+    {
+        [self moveCoffeeMan:touchLoc];
+    }
+}
+
+-(void)moveCoffeeMan:(CGPoint)location
+{
+    CGPoint newLocation = ccp(location.x, [man position].y);
     CGFloat winWidth = [[CCDirector sharedDirector] winSize].width;
     CGFloat velocity = winWidth/2; //2 seconds from one end to the other
     CGFloat distance = fabs([man position].x - newLocation.x);
     CGFloat duration = distance/velocity;
     [man runAction:[CCMoveTo actionWithDuration:duration position:newLocation]];
+}
+
+-(void)throwLine:(CGPoint)location
+{
+    CCSprite *line = [CCSprite spriteWithFile:@"line1.png"];
+    [self addChild:line];
+    [line setScaleY:100];
+    CGFloat lineCentreY = [line contentSize].height * [line scaleY] / 2;
+    [line setPosition:ccp(location.x, -lineCentreY)];
+    CGFloat winHeight = [[CCDirector sharedDirector] winSize].height;
+    CGPoint newPos = ccp([line position].x, [line position].y + winHeight);
+    CCCallBlockN *lineShotDone = [CCCallBlockN actionWithBlock:^(CCNode *node) {
+        [node removeFromParentAndCleanup:YES];
+    }];
+    [line runAction:[CCSequence actions:
+                     [CCMoveTo actionWithDuration:1 position:newPos],
+                     [CCDelayTime actionWithDuration:0.2],
+                     lineShotDone,
+                     nil]];
 }
 
 - (void)update:(ccTime)dt
