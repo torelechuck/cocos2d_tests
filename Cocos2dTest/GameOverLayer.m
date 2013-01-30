@@ -46,7 +46,6 @@
 
 - (void)startAgain:(id)sender
 {
-    NSLog(@"Try Again pressed");
     [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer scene]];
 }
 

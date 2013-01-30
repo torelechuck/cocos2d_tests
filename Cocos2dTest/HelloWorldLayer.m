@@ -12,6 +12,8 @@
 
 #import "GameOverLayer.h"
 
+#import "CMBall.h"
+
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
 
@@ -19,8 +21,8 @@
 
 #pragma mark - HelloWorldLayer
 
-CCSprite *rock;
 CCSprite *man;
+CMBall *ball;
 double xSpeed;
 double ySpeed;
 
@@ -49,11 +51,10 @@ double ySpeed;
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super initWithColor:ccc4(80,128,255,255)]) ) {
-		rock = [CCSprite spriteWithFile:@"glyph_rock_icon.png"];
-        [rock setPosition:ccp([rock contentSize].width/2,200)];
-        xSpeed = 100;
-        ySpeed = 0;
-        [self addChild:rock];
+        CCSprite *ballspr = [CCSprite spriteWithFile:@"glyph_rock_icon.png"];
+        CGPoint ballPos = ccp([ballspr contentSize].width/2,200);
+        ball = [[CMBall alloc] initWithSprite:ballspr size:4 position:ballPos];
+        [self addChild:[ball sprite]];
         [self schedule:@selector(nextFrame:)];
         man = [CCSprite spriteWithFile:@"coffeeman.png"];
         [man setPosition:ccp(200,[man contentSize].width/2)];
@@ -66,34 +67,7 @@ double ySpeed;
 
 -(void) nextFrame:(ccTime)dt
 {
-    double x = rock.position.x + xSpeed * dt;
-    double y = rock.position.y + ySpeed * dt;
-    [rock setPosition:ccp(x,y)];
-    [self calculateXSpeed:x];
-    [self calculateYSpeed:y withDelta:dt];
-}
-
--(void) calculateXSpeed:(double)x
-{
-    double rockCenter = [rock contentSize].width / 2.0;
-    double maxX = [[CCDirector sharedDirector] winSize].width;
-    if((xSpeed > 0 && x > maxX - rockCenter) || (xSpeed < 0 && x < 0 + rockCenter))
-    {
-        xSpeed = -xSpeed;
-    }
-}
-
--(void) calculateYSpeed:(double)y withDelta:(ccTime)dt
-{
-    double rockCenter = [rock contentSize].height / 2.0;
-    if(y < 0 + rockCenter && ySpeed < 0)
-    {
-        ySpeed = -ySpeed;
-    }
-    else
-    {
-        ySpeed = ySpeed - 300*dt;
-    }
+    [ball moveWithDelta:dt];
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -109,7 +83,7 @@ double ySpeed;
 
 - (void)update:(ccTime)dt
 {
-    if (CGRectIntersectsRect([rock boundingBox], [man boundingBox]))
+    if ([ball isCollitionWithRect:[man boundingBox]])
     {
         CCScene *gameOverScene = [GameOverLayer sceneWithWon:NO];
         [self runAction:
@@ -125,11 +99,8 @@ double ySpeed;
 // on "dealloc" you need to release all your retained objects
 - (void) dealloc
 {
-	// in case you have something to dealloc, do it in this method
-	// in this particular example nothing needs to be released.
-	// cocos2d will automatically release all the children (Label)
-	
-	// don't forget to call "super dealloc"
+    [ball dealloc];
+    ball = nil;
 	[super dealloc];
 }
 
