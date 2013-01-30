@@ -20,7 +20,7 @@
         [self setXSpeed:100];
         [self setYSpeed:0];
         [[self sprite] setPosition:pos];
-        [[self sprite] setScale:size/4];
+        [[self sprite] setScale:(float)size/2.0];
     }
     return self;
 }

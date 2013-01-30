@@ -53,7 +53,7 @@ double ySpeed;
 	if( (self=[super initWithColor:ccc4(80,128,255,255)]) ) {
         CCSprite *ballspr = [CCSprite spriteWithFile:@"glyph_rock_icon.png"];
         CGPoint ballPos = ccp([ballspr contentSize].width/2,200);
-        ball = [[CMBall alloc] initWithSprite:ballspr size:4 position:ballPos];
+        ball = [[CMBall alloc] initWithSprite:ballspr size:2 position:ballPos];
         [self addChild:[ball sprite]];
         [self schedule:@selector(nextFrame:)];
         man = [CCSprite spriteWithFile:@"coffeeman.png"];
