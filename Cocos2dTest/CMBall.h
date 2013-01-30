@@ -11,10 +11,10 @@
 
 @interface CMBall : NSObject
 
-@property (nonatomic) int size;
-@property (nonatomic) float xSpeed;
-@property (nonatomic) float ySpeed;
-@property (nonatomic, assign) CCSprite *sprite;
+@property (nonatomic, readonly) int size;
+@property (nonatomic, readonly) float xSpeed;
+@property (nonatomic, readonly) float ySpeed;
+@property (nonatomic, readonly, assign) CCSprite *sprite;
 
 - (id)initWithSprite:(CCSprite *)sprite size:(int)size position:(CGPoint)pos;
 - (void) moveWithDelta:(ccTime)dt;

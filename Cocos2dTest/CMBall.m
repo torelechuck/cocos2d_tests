@@ -11,16 +11,18 @@
 
 @implementation CMBall
 
-- (id)initWithSprite:(CCSprite*)sprite size:(int)size position:(CGPoint)pos
+@synthesize size, xSpeed, ySpeed, sprite;
+
+- (id)initWithSprite:(CCSprite*)sprt size:(int)sz position:(CGPoint)pos
 {
     if(self = [super init])
     {
-        [self setSize:size];
-        [self setSprite:sprite];
-        [self setXSpeed:100];
-        [self setYSpeed:0];
-        [[self sprite] setPosition:pos];
-        [[self sprite] setScale:(float)size/2.0];
+        size = sz;
+        sprite = sprt;
+        xSpeed = 100;
+        ySpeed = 0;
+        [sprite setPosition:pos];
+        [sprite setScale:(float)size/2.0];
     }
     return self;
 }
@@ -45,7 +47,7 @@
     double maxX = [[CCDirector sharedDirector] winSize].width;
     if(([self xSpeed] > 0 && x > maxX - xCenter) || ([self xSpeed] < 0 && x < 0 + xCenter))
     {
-        [self setXSpeed:-[self xSpeed]];
+        xSpeed = - xSpeed;
     }
 }
 
@@ -54,17 +56,17 @@
     double yCenter = [[self sprite] contentSize].height / 2.0;
     if(y < 0 + yCenter && [self ySpeed] < 0)
     {
-        [self setYSpeed:-[self ySpeed]];
+        ySpeed = -ySpeed;
     }
     else
     {
-        [self setYSpeed:[self ySpeed] - 300*dt];
+        ySpeed = ySpeed - 300 * dt;
     }
 }
 
 - (void) dealloc
 {
-    [self setSprite:nil];
+    sprite = nil;
 	[super dealloc];
 }
 
