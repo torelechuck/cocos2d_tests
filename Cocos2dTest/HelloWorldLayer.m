@@ -10,6 +10,8 @@
 // Import the interfaces
 #import "HelloWorldLayer.h"
 
+#import "GameOverLayer.h"
+
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
 
@@ -46,7 +48,7 @@ double ySpeed;
 {
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
-	if( (self=[super initWithColor:ccc4(255,255,255,255)]) ) {
+	if( (self=[super initWithColor:ccc4(80,128,255,255)]) ) {
 		rock = [CCSprite spriteWithFile:@"glyph_rock_icon.png"];
         [rock setPosition:ccp([rock contentSize].width/2,200)];
         xSpeed = 100;
@@ -109,11 +111,14 @@ double ySpeed;
 {
     if (CGRectIntersectsRect([rock boundingBox], [man boundingBox]))
     {
-        CCLabelTTF * label = [CCLabelTTF labelWithString:@"Boom" fontName:@"Arial" fontSize:32];
-        label.color = ccc3(0,0,0);
-        CGSize winSize = [[CCDirector sharedDirector] winSize];
-        label.position = ccp(winSize.width/2, winSize.height/2);
-        [self addChild:label];
+        CCScene *gameOverScene = [GameOverLayer sceneWithWon:NO];
+        [self runAction:
+         [CCSequence actions:
+          [CCDelayTime actionWithDuration:0.1],
+          [CCCallBlockN actionWithBlock:^(CCNode *node) {
+             [[CCDirector sharedDirector] replaceScene:gameOverScene];
+         }],
+          nil]];
     }
 }
 
