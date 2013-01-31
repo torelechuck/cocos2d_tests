@@ -27,6 +27,7 @@ NSMutableArray *_lines;
 double xSpeed;
 double ySpeed;
 static NSString * const BALL_FILE_NAME = @"glyph_rock_icon.png";
+long currLineIdx;
 
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
@@ -63,6 +64,7 @@ static NSString * const BALL_FILE_NAME = @"glyph_rock_icon.png";
         [self addChild:man];
         
         _lines = [[NSMutableArray alloc] init];
+        currLineIdx = 1;
         
         [self setIsTouchEnabled:YES];
         [self schedule:@selector(nextFrame:)];
@@ -125,15 +127,15 @@ static NSString * const BALL_FILE_NAME = @"glyph_rock_icon.png";
     {
         for (CCSprite *line in _lines)
         {
-            if ([ball isCollitionWithRect:[line boundingBox]])
+            if ([ball isCollitionWithLine:line])
             {
                 if([ball size] > 1)
                 {
                     //Create new balls
                     CCSprite *sprite1 = [CCSprite spriteWithFile:BALL_FILE_NAME];
-                    [newBalls addObject:[[CMBall alloc] initWithSprite:sprite1 sourceBall:ball isInOppositeDirection:false]];
+                    [newBalls addObject:[[CMBall alloc] initWithSprite:sprite1 sourceBall:ball isInOppositeDirection:false lineIdx:[line tag]]];
                     CCSprite *sprite2 = [CCSprite spriteWithFile:BALL_FILE_NAME];
-                    [newBalls addObject:[[CMBall alloc] initWithSprite:sprite2 sourceBall:ball isInOppositeDirection:true]];
+                    [newBalls addObject:[[CMBall alloc] initWithSprite:sprite2 sourceBall:ball isInOppositeDirection:true lineIdx:[line tag]]];
                 }
                 [deletedBalls addObject:ball];
             }
@@ -176,6 +178,8 @@ static NSString * const BALL_FILE_NAME = @"glyph_rock_icon.png";
 -(void)throwLine:(CGPoint)location
 {
     CCSprite *line = [CCSprite spriteWithFile:@"line1.png"];
+    line.tag = currLineIdx;
+    currLineIdx++;
     [self addChild:line];
     [_lines addObject:line];
     [line setScaleY:100];

@@ -12,13 +12,14 @@
 @implementation CMBall
 
 @synthesize size, xSpeed, ySpeed, sprite;
+long invincibleToLineIdx;
 
 - (id)initWithSprite:(CCSprite*)sprt size:(int)sz position:(CGPoint)pos
-{
-    return [self initWithSprite:sprt size:sz position:pos xSpeed:100 ySpeed:0];
+{ 
+    return [self initWithSprite:sprt size:sz position:pos xSpeed:100 ySpeed:0 lineIdx:0];
 }
 
-- (id)initWithSprite:(CCSprite *)sprt sourceBall:(CMBall*)ball isInOppositeDirection:(BOOL)isOpposite
+- (id)initWithSprite:(CCSprite *)sprt sourceBall:(CMBall*)ball isInOppositeDirection:(BOOL)isOpposite lineIdx:(long) lineIdx
 {
     int dx = [ball xSpeed];
     if(isOpposite) dx = -dx;
@@ -26,10 +27,16 @@
                            size:[ball size]/2
                        position:[[ball sprite] position]
                          xSpeed:dx
-                         ySpeed:[ball ySpeed]];
+                         ySpeed:[ball ySpeed]
+                        lineIdx:lineIdx];
 }
 
--(id)initWithSprite:(CCSprite*)sprt size:(int)sz position:(CGPoint)pos xSpeed:(float)dx ySpeed:(float)dy
+-(id)initWithSprite:(CCSprite*)sprt
+               size:(int)sz
+           position:(CGPoint)pos
+             xSpeed:(float)dx
+             ySpeed:(float)dy
+            lineIdx:(long)lineIdx
 {
     if(self = [super init])
     {
@@ -37,10 +44,16 @@
         sprite = sprt;
         xSpeed = dx;
         ySpeed = dy;
+        invincibleToLineIdx = lineIdx;
         [sprite setPosition:pos];
         [sprite setScale:(float)size/2.0];
     }
     return self;
+}
+
+-(BOOL) isCollitionWithLine:(CCSprite *) line
+{
+    return [self isCollitionWithRect:[line boundingBox]] && line.tag != invincibleToLineIdx;
 }
 
 -(BOOL) isCollitionWithRect:(CGRect) rect
