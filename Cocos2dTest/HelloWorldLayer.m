@@ -84,20 +84,41 @@ static NSString * const BALL_FILE_NAME = @"glyph_rock_icon.png";
 
 -(void) nextFrame:(ccTime)dt
 {
+    [self moveBalls:dt];
+    if([self checkIfGameOver]) return;
+    [self handleBallHits:dt];
+}
+
+-(void) moveBalls:(ccTime)dt
+{
     for(CMBall *ball in _balls)
     {
         [ball moveWithDelta:dt];
     }
-    
+}
+
+-(BOOL) checkIfGameOver
+{
     for (CMBall *ball in _balls)
     {
         if ([ball isCollitionWithRect:[man boundingBox]])
         {
-            [self showGameOverScene];
-            return;
+            CCScene *gameOverScene = [GameOverLayer sceneWithWon:NO];
+            [self runAction:
+             [CCSequence actions:
+              [CCDelayTime actionWithDuration:0.1],
+              [CCCallBlockN actionWithBlock:^(CCNode *node) {
+                 [[CCDirector sharedDirector] replaceScene:gameOverScene];
+             }],
+              nil]];
+            return true;
         }
     }
-    
+    return false;
+}
+
+-(void) handleBallHits:(ccTime)dt
+{    
     NSMutableArray *newBalls = [[NSMutableArray alloc] init];
     NSMutableArray *deletedBalls = [[NSMutableArray alloc] init];
     for (CMBall *ball in _balls)
@@ -126,18 +147,6 @@ static NSString * const BALL_FILE_NAME = @"glyph_rock_icon.png";
     {
         [self addBall:ball];
     }
-}
-
--(void) showGameOverScene
-{
-    CCScene *gameOverScene = [GameOverLayer sceneWithWon:NO];
-    [self runAction:
-     [CCSequence actions:
-      [CCDelayTime actionWithDuration:0.1],
-      [CCCallBlockN actionWithBlock:^(CCNode *node) {
-         [[CCDirector sharedDirector] replaceScene:gameOverScene];
-     }],
-      nil]];
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
