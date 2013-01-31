@@ -72,12 +72,19 @@ double ySpeed;
     [self addChild:[ball sprite]];
 }
 
+-(void) removeBall:(CMBall*)ball
+{
+    [_balls removeObject:ball];
+    [self removeChild:[ball sprite] cleanup:YES];
+}
+
 -(void) nextFrame:(ccTime)dt
 {
     for(CMBall *ball in _balls)
     {
         [ball moveWithDelta:dt];
     }
+    
     for (CMBall *ball in _balls)
     {
         if ([ball isCollitionWithRect:[man boundingBox]])
@@ -86,15 +93,27 @@ double ySpeed;
             return;
         }
     }
+    
+    NSMutableArray *newBalls = [[NSMutableArray alloc] init];
+    NSMutableArray *deletedBalls = [[NSMutableArray alloc] init];
     for (CMBall *ball in _balls)
     {
         for (CCSprite *line in _lines)
         {
             if ([ball isCollitionWithRect:[line boundingBox]])
             {
-                [self crushBall:ball];
+                [newBalls addObjectsFromArray:[ball splitBall]];
+                [deletedBalls addObject:ball];
             }
         }
+    }
+    for(CMBall *ball in deletedBalls)
+    {
+        [self removeBall:ball];
+    }
+    for(CMBall *ball in newBalls)
+    {
+        [self addBall:ball];
     }
 }
 
@@ -108,17 +127,6 @@ double ySpeed;
          [[CCDirector sharedDirector] replaceScene:gameOverScene];
      }],
       nil]];
-}
-
--(void) crushBall:(CMBall*)ball
-{
-    NSMutableArray *newBalls = [ball splitBall];
-    [_balls removeObject:ball];
-    [self removeChild:[ball sprite] cleanup:YES];
-    for(CMBall *newBall in newBalls)
-    {
-        [self addBall:newBall];
-    }
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
