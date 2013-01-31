@@ -14,9 +14,14 @@
 @synthesize size, xSpeed, ySpeed, sprite;
 long invincibleToLineIdx;
 
-- (id)initWithSprite:(CCSprite*)sprt size:(int)sz position:(CGPoint)pos
+- (id)initMovingRightWithSprite:(CCSprite*)sprt size:(int)sz position:(CGPoint)pos
 { 
     return [self initWithSprite:sprt size:sz position:pos xSpeed:100 ySpeed:0 lineIdx:0];
+}
+
+- (id)initMovingLeftWithSprite:(CCSprite*)sprt size:(int)sz position:(CGPoint)pos
+{
+    return [self initWithSprite:sprt size:sz position:pos xSpeed:-100 ySpeed:0 lineIdx:0];
 }
 
 - (id)initWithSprite:(CCSprite *)sprt sourceBall:(CMBall*)ball isInOppositeDirection:(BOOL)isOpposite lineIdx:(long) lineIdx

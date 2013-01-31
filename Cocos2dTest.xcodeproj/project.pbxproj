@@ -138,6 +138,7 @@
 		90A0215416B4C562004F2787 /* glyph_rock_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 90A0215316B4C562004F2787 /* glyph_rock_icon.png */; };
 		90A0215616B76E44004F2787 /* coffeeman.png in Resources */ = {isa = PBXBuildFile; fileRef = 90A0215516B76E44004F2787 /* coffeeman.png */; };
 		90B04FC016B966C100AABDE7 /* line1.png in Resources */ = {isa = PBXBuildFile; fileRef = 90B04FBF16B966C100AABDE7 /* line1.png */; };
+		90B04FC516BAF06400AABDE7 /* CMBallCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B04FC416BAF06300AABDE7 /* CMBallCreator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -410,6 +411,8 @@
 		90A0215316B4C562004F2787 /* glyph_rock_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = glyph_rock_icon.png; path = Resources/glyph_rock_icon.png; sourceTree = "<group>"; };
 		90A0215516B76E44004F2787 /* coffeeman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = coffeeman.png; path = Resources/coffeeman.png; sourceTree = "<group>"; };
 		90B04FBF16B966C100AABDE7 /* line1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = line1.png; path = Resources/line1.png; sourceTree = "<group>"; };
+		90B04FC316BAF06300AABDE7 /* CMBallCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMBallCreator.h; sourceTree = "<group>"; };
+		90B04FC416BAF06300AABDE7 /* CMBallCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMBallCreator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -476,6 +479,8 @@
 				90A0214616B4AFC3004F2787 /* AppDelegate.m */,
 				90A0214816B4AFC3004F2787 /* HelloWorldLayer.h */,
 				90A0214916B4AFC3004F2787 /* HelloWorldLayer.m */,
+				90B04FC316BAF06300AABDE7 /* CMBallCreator.h */,
+				90B04FC416BAF06300AABDE7 /* CMBallCreator.m */,
 				90A0214B16B4AFC3004F2787 /* IntroLayer.h */,
 				90A0214C16B4AFC3004F2787 /* IntroLayer.m */,
 				90A01FCE16B4AFC1004F2787 /* Resources */,
@@ -1033,6 +1038,7 @@
 				90A0214D16B4AFC3004F2787 /* IntroLayer.m in Sources */,
 				9079CA8A16B8B73300462290 /* GameOverLayer.m in Sources */,
 				9079CA8D16B8CBA500462290 /* CMBall.m in Sources */,
+				90B04FC516BAF06400AABDE7 /* CMBallCreator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

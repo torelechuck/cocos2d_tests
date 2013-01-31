@@ -16,7 +16,8 @@
 @property (nonatomic, readonly) float ySpeed;
 @property (nonatomic, readonly, assign) CCSprite *sprite;
 
-- (id)initWithSprite:(CCSprite*)sprt size:(int)sz position:(CGPoint)pos;
+- (id)initMovingRightWithSprite:(CCSprite*)sprt size:(int)sz position:(CGPoint)pos;
+- (id)initMovingLeftWithSprite:(CCSprite*)sprt size:(int)sz position:(CGPoint)pos;
 - (id)initWithSprite:(CCSprite *)sprt sourceBall:(CMBall*)ball isInOppositeDirection:(BOOL)isOpposite lineIdx:(long)lineIdx;
 - (void) moveWithDelta:(ccTime)dt;
 - (BOOL) isCollitionWithLine:(CCSprite *) line;

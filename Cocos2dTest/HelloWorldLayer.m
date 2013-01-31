@@ -13,6 +13,7 @@
 #import "GameOverLayer.h"
 
 #import "CMBall.h"
+#import "CMBallCreator.h"
 
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
@@ -54,10 +55,10 @@ long currLineIdx;
 	if( (self=[super initWithColor:ccc4(80,128,255,255)]) ) {
         
         _balls = [[NSMutableArray alloc] init];
-        CCSprite *ballSprite = [CCSprite spriteWithFile:BALL_FILE_NAME];
-        CGPoint ballPos = ccp([ballSprite boundingBox].origin.x/2,200);
-        CMBall *ball = [[CMBall alloc] initWithSprite:ballSprite size:2 position:ballPos];
-        [self addBall:ball];
+        for(CMBall *ball in [CMBallCreator createBallsForLevel:4])
+        {
+         [self addBall:ball];
+        }
         
         man = [CCSprite spriteWithFile:@"coffeeman.png"];
         [man setPosition:ccp(200,[man contentSize].width/2)];
@@ -131,11 +132,7 @@ long currLineIdx;
             {
                 if([ball size] > 1)
                 {
-                    //Create new balls
-                    CCSprite *sprite1 = [CCSprite spriteWithFile:BALL_FILE_NAME];
-                    [newBalls addObject:[[CMBall alloc] initWithSprite:sprite1 sourceBall:ball isInOppositeDirection:false lineIdx:[line tag]]];
-                    CCSprite *sprite2 = [CCSprite spriteWithFile:BALL_FILE_NAME];
-                    [newBalls addObject:[[CMBall alloc] initWithSprite:sprite2 sourceBall:ball isInOppositeDirection:true lineIdx:[line tag]]];
+                    [newBalls addObjectsFromArray:[CMBallCreator splitBall:ball withLineNumber:[line tag]]];
                 }
                 [deletedBalls addObject:ball];
             }
@@ -149,6 +146,8 @@ long currLineIdx;
     {
         [self addBall:ball];
     }
+    [newBalls release];
+    [deletedBalls release];
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
