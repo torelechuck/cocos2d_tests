@@ -16,8 +16,9 @@
 @property (nonatomic, readonly) float ySpeed;
 @property (nonatomic, readonly, assign) CCSprite *sprite;
 
-- (id)initWithSprite:(CCSprite *)sprite size:(int)size position:(CGPoint)pos;
+- (id)initWithFile:(NSString *)file size:(int)size position:(CGPoint)pos;
 - (void) moveWithDelta:(ccTime)dt;
 - (BOOL) isCollitionWithRect:(CGRect) rect;
+-(NSMutableArray*) splitBall;
 
 @end

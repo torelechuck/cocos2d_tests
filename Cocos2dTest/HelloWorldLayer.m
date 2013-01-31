@@ -23,6 +23,7 @@
 
 CCSprite *man;
 NSMutableArray *_balls;
+NSMutableArray *_lines;
 double xSpeed;
 double ySpeed;
 
@@ -48,22 +49,27 @@ double ySpeed;
 // on "init" you need to initialize your instance
 -(id) init
 {
-	// always call "super" init
-	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super initWithColor:ccc4(80,128,255,255)]) ) {
-        CCSprite *ballspr = [CCSprite spriteWithFile:@"glyph_rock_icon.png"];
-        CGPoint ballPos = ccp([ballspr contentSize].width/2,200);
+        
         _balls = [[NSMutableArray alloc] init];
-        CMBall *ball = [[CMBall alloc] initWithSprite:ballspr size:2 position:ballPos];
-        [self addChild:[ball sprite]];
-        [_balls addObject:ball];
+        [self addBall:[[CMBall alloc] initWithFile:@"glyph_rock_icon.png" size:2 position:ccp(32,200)]];
+        
         man = [CCSprite spriteWithFile:@"coffeeman.png"];
         [man setPosition:ccp(200,[man contentSize].width/2)];
         [self addChild:man];
+        
+        _lines = [[NSMutableArray alloc] init];
+        
         [self setIsTouchEnabled:YES];
         [self schedule:@selector(nextFrame:)];
     }
 	return self;
+}
+
+-(void) addBall:(CMBall*)ball
+{
+    [_balls addObject:ball];
+    [self addChild:[ball sprite]];
 }
 
 -(void) nextFrame:(ccTime)dt
@@ -80,6 +86,16 @@ double ySpeed;
             return;
         }
     }
+    for (CMBall *ball in _balls)
+    {
+        for (CCSprite *line in _lines)
+        {
+            if ([ball isCollitionWithRect:[line boundingBox]])
+            {
+                [self crushBall:ball];
+            }
+        }
+    }
 }
 
 -(void) showGameOverScene
@@ -92,6 +108,17 @@ double ySpeed;
          [[CCDirector sharedDirector] replaceScene:gameOverScene];
      }],
       nil]];
+}
+
+-(void) crushBall:(CMBall*)ball
+{
+    NSMutableArray *newBalls = [ball splitBall];
+    [_balls removeObject:ball];
+    [self removeChild:[ball sprite] cleanup:YES];
+    for(CMBall *newBall in newBalls)
+    {
+        [self addBall:newBall];
+    }
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -122,12 +149,14 @@ double ySpeed;
 {
     CCSprite *line = [CCSprite spriteWithFile:@"line1.png"];
     [self addChild:line];
+    [_lines addObject:line];
     [line setScaleY:100];
     CGFloat lineCentreY = [line contentSize].height * [line scaleY] / 2;
     [line setPosition:ccp(location.x, -lineCentreY)];
     CGFloat winHeight = [[CCDirector sharedDirector] winSize].height;
     CGPoint newPos = ccp([line position].x, [line position].y + winHeight);
     CCCallBlockN *lineShotDone = [CCCallBlockN actionWithBlock:^(CCNode *node) {
+        [_lines removeObject:node];
         [node removeFromParentAndCleanup:YES];
     }];
     [line runAction:[CCSequence actions:
@@ -142,6 +171,8 @@ double ySpeed;
 {
     [_balls release];
     _balls = nil;
+    [_lines release];
+    _lines = nil;
 	[super dealloc];
 }
 
