@@ -26,6 +26,7 @@ NSMutableArray *_balls;
 NSMutableArray *_lines;
 double xSpeed;
 double ySpeed;
+static NSString * const BALL_FILE_NAME = @"glyph_rock_icon.png";
 
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
@@ -52,7 +53,10 @@ double ySpeed;
 	if( (self=[super initWithColor:ccc4(80,128,255,255)]) ) {
         
         _balls = [[NSMutableArray alloc] init];
-        [self addBall:[[CMBall alloc] initWithFile:@"glyph_rock_icon.png" size:2 position:ccp(32,200)]];
+        CCSprite *ballSprite = [CCSprite spriteWithFile:BALL_FILE_NAME];
+        CGPoint ballPos = ccp([ballSprite boundingBox].origin.x/2,200);
+        CMBall *ball = [[CMBall alloc] initWithSprite:ballSprite size:2 position:ballPos];
+        [self addBall:ball];
         
         man = [CCSprite spriteWithFile:@"coffeeman.png"];
         [man setPosition:ccp(200,[man contentSize].width/2)];
@@ -102,7 +106,14 @@ double ySpeed;
         {
             if ([ball isCollitionWithRect:[line boundingBox]])
             {
-                [newBalls addObjectsFromArray:[ball splitBall]];
+                if([ball size] > 1)
+                {
+                    //Create new balls
+                    CCSprite *sprite1 = [CCSprite spriteWithFile:BALL_FILE_NAME];
+                    [newBalls addObject:[[CMBall alloc] initWithSprite:sprite1 sourceBall:ball isInOppositeDirection:false]];
+                    CCSprite *sprite2 = [CCSprite spriteWithFile:BALL_FILE_NAME];
+                    [newBalls addObject:[[CMBall alloc] initWithSprite:sprite2 sourceBall:ball isInOppositeDirection:true]];
+                }
                 [deletedBalls addObject:ball];
             }
         }
