@@ -22,7 +22,7 @@
 #pragma mark - HelloWorldLayer
 
 CCSprite *man;
-CMBall *ball;
+NSMutableArray *_balls;
 double xSpeed;
 double ySpeed;
 
@@ -53,21 +53,45 @@ double ySpeed;
 	if( (self=[super initWithColor:ccc4(80,128,255,255)]) ) {
         CCSprite *ballspr = [CCSprite spriteWithFile:@"glyph_rock_icon.png"];
         CGPoint ballPos = ccp([ballspr contentSize].width/2,200);
-        ball = [[CMBall alloc] initWithSprite:ballspr size:2 position:ballPos];
+        _balls = [[NSMutableArray alloc] init];
+        CMBall *ball = [[CMBall alloc] initWithSprite:ballspr size:2 position:ballPos];
         [self addChild:[ball sprite]];
-        [self schedule:@selector(nextFrame:)];
+        [_balls addObject:ball];
         man = [CCSprite spriteWithFile:@"coffeeman.png"];
         [man setPosition:ccp(200,[man contentSize].width/2)];
         [self addChild:man];
         [self setIsTouchEnabled:YES];
-        [self schedule:@selector(update:)];
+        [self schedule:@selector(nextFrame:)];
     }
 	return self;
 }
 
 -(void) nextFrame:(ccTime)dt
 {
-    [ball moveWithDelta:dt];
+    for(CMBall *ball in _balls)
+    {
+        [ball moveWithDelta:dt];
+    }
+    for (CMBall *ball in _balls)
+    {
+        if ([ball isCollitionWithRect:[man boundingBox]])
+        {
+            [self showGameOverScene];
+            return;
+        }
+    }
+}
+
+-(void) showGameOverScene
+{
+    CCScene *gameOverScene = [GameOverLayer sceneWithWon:NO];
+    [self runAction:
+     [CCSequence actions:
+      [CCDelayTime actionWithDuration:0.1],
+      [CCCallBlockN actionWithBlock:^(CCNode *node) {
+         [[CCDirector sharedDirector] replaceScene:gameOverScene];
+     }],
+      nil]];
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -113,26 +137,11 @@ double ySpeed;
                      nil]];
 }
 
-- (void)update:(ccTime)dt
-{
-    if ([ball isCollitionWithRect:[man boundingBox]])
-    {
-        CCScene *gameOverScene = [GameOverLayer sceneWithWon:NO];
-        [self runAction:
-         [CCSequence actions:
-          [CCDelayTime actionWithDuration:0.1],
-          [CCCallBlockN actionWithBlock:^(CCNode *node) {
-             [[CCDirector sharedDirector] replaceScene:gameOverScene];
-         }],
-          nil]];
-    }
-}
-
 // on "dealloc" you need to release all your retained objects
 - (void) dealloc
 {
-    [ball dealloc];
-    ball = nil;
+    [_balls release];
+    _balls = nil;
 	[super dealloc];
 }
 
