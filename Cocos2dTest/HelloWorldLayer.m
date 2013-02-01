@@ -91,6 +91,7 @@ static int currentLevel = 0;
 -(void) nextFrame:(ccTime)dt
 {
     [self moveBalls:dt];
+    if([self checkIfLevelCleared]) return;
     if([self checkIfGameOver]) return;
     [self handleBallHits:dt];
 }
@@ -103,6 +104,16 @@ static int currentLevel = 0;
     }
 }
 
+-(BOOL) checkIfLevelCleared
+{
+    if([_balls count] == 0){
+        CCScene *clearedLevelScene = [UserMenuLayer sceneForLevel:currentLevel];
+        [self showUserMenuLayer:clearedLevelScene];
+        return true;
+    }
+    return false;
+}
+
 -(BOOL) checkIfGameOver
 {
     for (CMBall *ball in _balls)
@@ -110,22 +121,27 @@ static int currentLevel = 0;
         if ([ball isCollitionWithRect:[man boundingBox]])
         {
             currentLevel = 0;
-            CCScene *gameOverScene = [UserMenuLayer sceneWithWon:NO];
-            [self runAction:
-             [CCSequence actions:
-              [CCDelayTime actionWithDuration:0.1],
-              [CCCallBlockN actionWithBlock:^(CCNode *node) {
-                 [[CCDirector sharedDirector] replaceScene:gameOverScene];
-             }],
-              nil]];
+            CCScene *gameOverScene = [UserMenuLayer sceneGameOver];
+            [self showUserMenuLayer:gameOverScene];
             return true;
         }
     }
     return false;
 }
+        
+-(void) showUserMenuLayer:(CCScene*) scene
+{
+    [self runAction:
+     [CCSequence actions:
+      [CCDelayTime actionWithDuration:0.1],
+      [CCCallBlockN actionWithBlock:^(CCNode *node) {
+         [[CCDirector sharedDirector] replaceScene:scene];
+     }],
+      nil]];
+}
 
 -(void) handleBallHits:(ccTime)dt
-{    
+{
     NSMutableArray *newBalls = [[NSMutableArray alloc] init];
     NSMutableArray *deletedBalls = [[NSMutableArray alloc] init];
     for (CMBall *ball in _balls)

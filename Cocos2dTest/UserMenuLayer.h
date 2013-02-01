@@ -13,7 +13,7 @@
     
 }
 
-+(CCScene *) sceneWithWon:(BOOL)won;
-- (id)initWithWon:(BOOL)won;
++(CCScene *) sceneGameOver;
++(CCScene *) sceneForLevel:(int)level;
 
 @end

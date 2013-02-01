@@ -11,21 +11,31 @@
 
 @implementation UserMenuLayer
 
-+(CCScene *) sceneWithWon:(BOOL)won {
++(CCScene *) sceneGameOver {
+    return [UserMenuLayer sceneForLevel:0];
+}
+
++(CCScene *) sceneForLevel:(int)level {
     CCScene *scene = [CCScene node];
-    UserMenuLayer *layer = [[[UserMenuLayer alloc] initWithWon:won] autorelease];
+    UserMenuLayer *layer = [[[UserMenuLayer alloc] initForLevel:level] autorelease];
     [scene addChild: layer];
     return scene;
 }
 
-- (id)initWithWon:(BOOL)won {
+- (id)initForLevel:(int)level {
     if ((self = [super initWithColor:ccc4(0, 0, 0, 255)])) {
         
-        NSString * message;
-        if (won) {
+        NSString *message;
+        NSString *buttonText;
+        if (level == 5) {
             message = @"You Won!";
-        } else {
+            buttonText = @"Try Again";
+        } else if(level == 0) {
             message = @"Game Over!";
+            buttonText = @"Try Again";
+        } else {
+            message = [NSString stringWithFormat:@"Level %i Cleared!", level];
+            buttonText = @"Next level";
         }
         
         CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -33,13 +43,13 @@
         [label setPosition:ccp(winSize.width/2, winSize.height/2)];
         [self addChild:label];
         
-        CCMenuItemFont *againButton = [CCMenuItemFont itemWithString:@"Try Again"
+        CCMenuItemFont *button = [CCMenuItemFont itemWithString:buttonText
                                                               target:self
                                                             selector:@selector(startAgain:)];
-        CCMenu *againMenu = [CCMenu menuWithItems:againButton, nil];
-        [againMenu setPosition:ccp(winSize.width/2, 50)];
+        CCMenu *menu = [CCMenu menuWithItems:button, nil];
+        [menu setPosition:ccp(winSize.width/2, 50)];
         
-        [self addChild:againMenu];
+        [self addChild:menu];
     }
     return self;
 }
