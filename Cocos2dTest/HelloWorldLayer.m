@@ -10,7 +10,7 @@
 // Import the interfaces
 #import "HelloWorldLayer.h"
 
-#import "GameOverLayer.h"
+#import "UserMenuLayer.h"
 
 #import "CMBall.h"
 #import "CMBallCreator.h"
@@ -25,10 +25,12 @@
 CCSprite *man;
 NSMutableArray *_balls;
 NSMutableArray *_lines;
+long currLineIdx;
 double xSpeed;
 double ySpeed;
 static NSString * const BALL_FILE_NAME = @"glyph_rock_icon.png";
-long currLineIdx;
+static int currentLevel = 0;
+
 
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
@@ -54,8 +56,9 @@ long currLineIdx;
 {
 	if( (self=[super initWithColor:ccc4(80,128,255,255)]) ) {
         
+        currentLevel++;
         _balls = [[NSMutableArray alloc] init];
-        for(CMBall *ball in [CMBallCreator createBallsForLevel:4])
+        for(CMBall *ball in [CMBallCreator createBallsForLevel:currentLevel])
         {
          [self addBall:ball];
         }
@@ -106,7 +109,8 @@ long currLineIdx;
     {
         if ([ball isCollitionWithRect:[man boundingBox]])
         {
-            CCScene *gameOverScene = [GameOverLayer sceneWithWon:NO];
+            currentLevel = 0;
+            CCScene *gameOverScene = [UserMenuLayer sceneWithWon:NO];
             [self runAction:
              [CCSequence actions:
               [CCDelayTime actionWithDuration:0.1],

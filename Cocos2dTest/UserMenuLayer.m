@@ -6,14 +6,14 @@
 //  Copyright 2013 __MyCompanyName__. All rights reserved.
 //
 
-#import "GameOverLayer.h"
+#import "UserMenuLayer.h"
 #import "HelloWorldLayer.h"
 
-@implementation GameOverLayer
+@implementation UserMenuLayer
 
 +(CCScene *) sceneWithWon:(BOOL)won {
     CCScene *scene = [CCScene node];
-    GameOverLayer *layer = [[[GameOverLayer alloc] initWithWon:won] autorelease];
+    UserMenuLayer *layer = [[[UserMenuLayer alloc] initWithWon:won] autorelease];
     [scene addChild: layer];
     return scene;
 }
