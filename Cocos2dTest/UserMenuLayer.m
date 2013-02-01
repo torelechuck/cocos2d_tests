@@ -27,7 +27,7 @@
         
         NSString *message;
         NSString *buttonText;
-        if (level == 5) {
+        if (level == 4) {
             message = @"You Won!";
             buttonText = @"Try Again";
         } else if(level == 0) {
