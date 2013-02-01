@@ -60,7 +60,7 @@ static int currentLevel = 0;
         }
         
         man = [CCSprite spriteWithFile:@"coffeeman.png"];
-        [man setPosition:ccp(200,[man contentSize].width/2)];
+        [man setPosition:ccp(200,[man contentSize].height/2)];
         [self addChild:man];
         
         _lines = [[NSMutableArray alloc] init];

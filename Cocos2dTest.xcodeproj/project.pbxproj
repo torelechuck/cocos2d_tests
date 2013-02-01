@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		9079CA8A16B8B73300462290 /* UserMenuLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9079CA8916B8B73300462290 /* UserMenuLayer.m */; };
 		9079CA8D16B8CBA500462290 /* CMBall.m in Sources */ = {isa = PBXBuildFile; fileRef = 9079CA8C16B8CBA500462290 /* CMBall.m */; };
+		9097CDCF16BB626D009EF5E5 /* glyph_rock_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9097CDCD16BB626D009EF5E5 /* glyph_rock_icon.png */; };
+		9097CDD016BB626D009EF5E5 /* coffeeman.png in Resources */ = {isa = PBXBuildFile; fileRef = 9097CDCE16BB626D009EF5E5 /* coffeeman.png */; };
 		90A01FBC16B4AFC1004F2787 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A01FBB16B4AFC1004F2787 /* QuartzCore.framework */; };
 		90A01FBE16B4AFC1004F2787 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A01FBD16B4AFC1004F2787 /* OpenGLES.framework */; };
 		90A01FC016B4AFC1004F2787 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A01FBF16B4AFC1004F2787 /* OpenAL.framework */; };
@@ -146,6 +148,8 @@
 		9079CA8916B8B73300462290 /* UserMenuLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserMenuLayer.m; sourceTree = "<group>"; };
 		9079CA8B16B8CBA500462290 /* CMBall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMBall.h; sourceTree = "<group>"; };
 		9079CA8C16B8CBA500462290 /* CMBall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMBall.m; sourceTree = "<group>"; };
+		9097CDCD16BB626D009EF5E5 /* glyph_rock_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glyph_rock_icon.png; sourceTree = "<group>"; };
+		9097CDCE16BB626D009EF5E5 /* coffeeman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coffeeman.png; sourceTree = "<group>"; };
 		90A01FB716B4AFC1004F2787 /* Cocos2dTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cocos2dTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90A01FBB16B4AFC1004F2787 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		90A01FBD16B4AFC1004F2787 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -493,6 +497,8 @@
 		90A01FCE16B4AFC1004F2787 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9097CDCD16BB626D009EF5E5 /* glyph_rock_icon.png */,
+				9097CDCE16BB626D009EF5E5 /* coffeeman.png */,
 				90B04FBF16B966C100AABDE7 /* line1.png */,
 				90A0215516B76E44004F2787 /* coffeeman.png */,
 				90A0215316B4C562004F2787 /* glyph_rock_icon.png */,
@@ -922,6 +928,8 @@
 				90A0215416B4C562004F2787 /* glyph_rock_icon.png in Resources */,
 				90A0215616B76E44004F2787 /* coffeeman.png in Resources */,
 				90B04FC016B966C100AABDE7 /* line1.png in Resources */,
+				9097CDCF16BB626D009EF5E5 /* glyph_rock_icon.png in Resources */,
+				9097CDD016BB626D009EF5E5 /* coffeeman.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
