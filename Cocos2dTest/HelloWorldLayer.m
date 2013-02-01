@@ -26,11 +26,7 @@ CCSprite *man;
 NSMutableArray *_balls;
 NSMutableArray *_lines;
 long currLineIdx;
-double xSpeed;
-double ySpeed;
-static NSString * const BALL_FILE_NAME = @"glyph_rock_icon.png";
 static int currentLevel = 0;
-
 
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
